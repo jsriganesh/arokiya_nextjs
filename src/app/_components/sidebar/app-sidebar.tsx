@@ -1,6 +1,7 @@
 "use client";
 
 import { Settings, CircleHelp, Search, Database, ClipboardList, File, Command } from "lucide-react";
+import Image from "next/image";
 
 import {
   Sidebar,
@@ -63,8 +64,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild className="data-[slot=sidebar-menu-button]:!p-1.5">
               <a href="#">
-                <Command />
-                <span className="text-base font-semibold">{APP_CONFIG.name}</span>
+                <Image src="/assets/images/logo/logo.png" alt="Logo" width={38} height={38} />
+                <Image src="/assets/images/logo/logo_text.png" alt="Logo" width={100} height={38} />
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -75,9 +76,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {/* <NavDocuments items={data.documents} /> */}
         {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
       </SidebarContent>
-      <SidebarFooter>
+      {/* <SidebarFooter>
         <NavUser user={rootUser} />
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   );
 }

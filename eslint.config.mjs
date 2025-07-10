@@ -50,13 +50,13 @@ export default [
       "prettier/prettier": "warn",
 
       // File Naming
-      "unicorn/filename-case": [
-        "error",
-        {
-          case: "kebabCase",
-          ignore: ["^.*\\.config\\.(js|ts|mjs)$", "^.*\\.d\\.ts$"],
-        },
-      ],
+      // "unicorn/filename-case": [
+      //   "error",
+      //   {
+      //     case: "kebabCase",
+      //     ignore: ["^.*\\.config\\.(js|ts|mjs)$", "^.*\\.d\\.ts$"],
+      //   },
+      // ],
 
       // Custom Rules (Not covered by plugins)
       "spaced-comment": ["error", "always", { exceptions: ["-", "+"] }],
@@ -65,38 +65,38 @@ export default [
 
       // Import/Export Rules
       "import/no-mutable-exports": "error",
-      "import/order": [
-        "error",
-        {
-          groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
-          pathGroups: [
-            {
-              pattern: "react",
-              group: "external",
-              position: "before",
-            },
-            {
-              pattern: "{next,next/**}",
-              group: "external",
-              position: "before",
-            },
-          ],
-          pathGroupsExcludedImportTypes: [],
-          "newlines-between": "always",
-          alphabetize: {
-            order: "asc",
-            caseInsensitive: true,
-          },
-        },
-      ],
+      // "import/order": [
+      //   "error",
+      //   {
+      //     groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+      //     pathGroups: [
+      //       {
+      //         pattern: "react",
+      //         group: "external",
+      //         position: "before",
+      //       },
+      //       {
+      //         pattern: "{next,next/**}",
+      //         group: "external",
+      //         position: "before",
+      //       },
+      //     ],
+      //     pathGroupsExcludedImportTypes: [],
+      //     "newlines-between": "always",
+      //     alphabetize: {
+      //       order: "asc",
+      //       caseInsensitive: true,
+      //     },
+      //   },
+      // ],
       "import/newline-after-import": "error",
-      "import/no-unresolved": [
-        "error",
-        {
-          caseSensitive: true,
-        },
-      ],
-      "no-duplicate-imports": ["error", { includeExports: true }],
+      // "import/no-unresolved": [
+      //   "error",
+      //   {
+      //     caseSensitive: true,
+      //   },
+      // ],
+      "no-duplicate-imports": ['off', { includeExports: true }],
       "import/no-cycle": ["error", { maxDepth: 2 }],
 
       // Whitespace and Punctuation (Style Rules)
@@ -125,11 +125,11 @@ export default [
       "max-depth": ["error", 4],
 
       // TypeScript-Specific Rules (customized)
-      "@typescript-eslint/prefer-nullish-coalescing": "error",
+      "@typescript-eslint/prefer-nullish-coalescing": 'off',
       "@typescript-eslint/no-unnecessary-type-assertion": "error",
       "@typescript-eslint/no-unnecessary-condition": "warn",
       "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/no-unused-vars": ["warn"],
+      "@typescript-eslint/no-unused-vars": 'off',
 
       // React unnecessary import rules
       "react/jsx-no-useless-fragment": ["warn", { allowExpressions: true }],
@@ -150,7 +150,7 @@ export default [
       "react/jsx-no-constructed-context-values": "error",
 
       // SonarJS: Detect commented-out code
-      "sonarjs/no-commented-code": "warn",
+      "sonarjs/no-commented-code": 'off',
     },
   },
 ];

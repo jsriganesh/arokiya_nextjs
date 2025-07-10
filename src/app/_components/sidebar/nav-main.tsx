@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 
 import { PlusCircleIcon, MailIcon, ChevronRight } from "lucide-react";
@@ -44,6 +45,7 @@ const NavItemExpanded = ({
   isActive: (url: string, subItems?: NavMainItem["subItems"]) => boolean;
   isSubmenuOpen: (subItems?: NavMainItem["subItems"]) => boolean;
 }) => {
+  const router = useRouter();
   return (
     <Collapsible key={item.title} asChild defaultOpen={isSubmenuOpen(item.subItems)} className="group/collapsible">
       <SidebarMenuItem>
@@ -66,11 +68,22 @@ const NavItemExpanded = ({
               isActive={isActive(item.url)}
               tooltip={item.title}
             >
-              <Link href={item.url} target={item.newTab ? "_blank" : undefined}>
+              {/* <Link href={item.url} target={item.newTab ? "_blank" : undefined}>
                 {item.icon && <item.icon />}
                 <span>{item.title}</span>
                 {item.comingSoon && <IsComingSoon />}
-              </Link>
+              </Link> */}
+              {
+                <div
+                  onClick={() => {
+                    router.push(item.url);
+                  }}
+                >
+                  {item.icon && <item.icon />}
+                  <span>{item.title}</span>
+                  {item.comingSoon && <IsComingSoon />}
+                </div>
+              }
             </SidebarMenuButton>
           )}
         </CollapsibleTrigger>
@@ -158,7 +171,7 @@ export function NavMain({ items }: NavMainProps) {
 
   return (
     <>
-      <SidebarGroup>
+      {/* <SidebarGroup>
         <SidebarGroupContent className="flex flex-col gap-2">
           <SidebarMenu>
             <SidebarMenuItem className="flex items-center gap-2">
@@ -180,7 +193,7 @@ export function NavMain({ items }: NavMainProps) {
             </SidebarMenuItem>
           </SidebarMenu>
         </SidebarGroupContent>
-      </SidebarGroup>
+      </SidebarGroup> */}
       {items.map((group) => (
         <SidebarGroup key={group.id}>
           {group.label && <SidebarGroupLabel>{group.label}</SidebarGroupLabel>}

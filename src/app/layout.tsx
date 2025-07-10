@@ -19,9 +19,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className="light" suppressHydrationWarning>
+    <html lang="en" className="dark" suppressHydrationWarning>
       <body className={`${inter.className} min-h-screen antialiased`}>
-        <ThemeProvider attribute="class" defaultTheme="light" disableTransitionOnChange enableSystem={false}>
+        <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange enableSystem={false}>
           {children}
           <Toaster />
         </ThemeProvider>
