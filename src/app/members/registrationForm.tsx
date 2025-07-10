@@ -12,10 +12,16 @@ type FormData = {
   address: string;
   bloodGroup: string;
   dob: Date | null;
+  doj: Date | null;
   isDonor: string;
+  gender: string;
+  plan: string;
+  // paidAmount: string;
+  // advanceAmount: string;
 };
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+const gender = ["Male", "Female", "Others"];
 
 export default function RegistrationForm() {
   const {
@@ -39,7 +45,7 @@ export default function RegistrationForm() {
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Grid layout for fields */}
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {/* Member Name */}
           <div>
             <label className="mb-1 block font-medium">Member Name *</label>
@@ -89,7 +95,7 @@ export default function RegistrationForm() {
           </div>
 
           {/* Address */}
-          <div className="md:col-span-2">
+          <div className="">
             <label className="mb-1 block font-medium">Address *</label>
             <input
               type="text"
@@ -106,7 +112,7 @@ export default function RegistrationForm() {
           <div>
             <label className="mb-1 block font-medium">Blood Group *</label>
             <select
-              className="w-full rounded border border-gray-300 p-2"
+              className="h-10 w-full rounded border border-gray-300 p-2"
               {...register("bloodGroup", { required: "Blood group is required" })}
             >
               <option value="">Select</option>
@@ -117,6 +123,23 @@ export default function RegistrationForm() {
               ))}
             </select>
             {errors.bloodGroup && <p className="text-sm text-red-500">{errors.bloodGroup.message}</p>}
+          </div>
+
+          {/* Gender */}
+          <div>
+            <label className="mb-1 block font-medium">Gender *</label>
+            <select
+              className="h-10 w-full rounded border border-gray-300 p-2"
+              {...register("gender", { required: "gender is required" })}
+            >
+              <option value="">Select</option>
+              {gender.map((group) => (
+                <option key={group} value={group}>
+                  {group}
+                </option>
+              ))}
+            </select>
+            {errors.gender && <p className="text-sm text-red-500">{errors.gender.message}</p>}
           </div>
 
           {/* Date of Birth */}
@@ -139,20 +162,24 @@ export default function RegistrationForm() {
             {errors.dob && <p className="text-sm text-red-500">{errors.dob.message}</p>}
           </div>
 
-          {/* Yes or No */}
+          {/* Date of Join */}
           <div>
-            <label className="mb-1 block font-medium">Are you a donor? *</label>
-            <div className="flex gap-4">
-              <label className="flex items-center gap-1">
-                <input type="radio" value="yes" {...register("isDonor", { required: "Please select an option" })} />
-                Yes
-              </label>
-              <label className="flex items-center gap-1">
-                <input type="radio" value="no" {...register("isDonor", { required: "Please select an option" })} />
-                No
-              </label>
-            </div>
-            {errors.isDonor && <p className="text-sm text-red-500">{errors.isDonor.message}</p>}
+            <label className="mb-1 block font-medium">Date of Birth *</label>
+            <Controller
+              control={control}
+              name="doj"
+              rules={{ required: "Date of join is required" }}
+              render={({ field }) => (
+                <DatePicker
+                  placeholderText="Select date"
+                  selected={field.value}
+                  onChange={field.onChange}
+                  dateFormat="dd/MM/yyyy"
+                  className="w-full rounded border border-gray-300 p-2"
+                />
+              )}
+            />
+            {errors.doj && <p className="text-sm text-red-500">{errors.doj.message}</p>}
           </div>
         </div>
 
