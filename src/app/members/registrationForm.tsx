@@ -4,6 +4,12 @@ import { useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { format } from "date-fns";
+import { useState } from "react";
+import { IconButton, Typography, Box, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, TextField, Grid, Modal } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import WebcamCapture from "@/components/webcamCapture";
+import AutoCompleteDropDown from "@/components/autoCompleteDropDown";
+import Image from "next/image";
 
 type FormData = {
   memberName: string;
@@ -23,6 +29,34 @@ type FormData = {
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const gender = ["Male", "Female", "Others"];
 
+const modalstyle = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
+
+interface PaymentDetailsProps {
+  /* eslint-disable @typescript-eslint/no-explicit-any */
+  plan: any;
+  // collectAdvance:string,
+  advanceAmount: string
+  paidAmount: string
+}
+
+const defaultPaymentDetails: PaymentDetailsProps = {
+  plan: {},
+  // collectAdvance:'',
+  advanceAmount: '',
+  paidAmount: ''
+}
+
+
 export default function RegistrationForm() {
   const {
     register,
@@ -35,13 +69,73 @@ export default function RegistrationForm() {
     },
   });
 
+  const [profileImage, setProfileImage] = useState('');
+  const [showImageUploadModal, setShowImageUploadModal] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState<PaymentDetailsProps>(defaultPaymentDetails);
+
+
+
   const onSubmit = (data: FormData) => {
     console.log("Form Submitted", data);
   };
 
+
+  const renderProfileImage = () => {
+    return (
+      <Box
+        sx={{
+          position: 'relative',
+          width: 120,
+          height: 120,
+          borderRadius: '50%',
+          backgroundColor: '#d3d3d3',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          overflow: 'hidden',
+        }}
+      >
+        <div onClick={()=>setShowImageUploadModal(true)}>
+        {
+          profileImage ? 
+          <Image src={profileImage} alt="Base64 Image" style={{height:120,width:120}} />
+
+          :
+          <Typography color="text.secondary" fontSize={14}>
+          No Image
+        </Typography>}
+
+        <IconButton
+          sx={{
+            position: 'absolute',
+            bottom: 4,
+            right: 4,
+            backgroundColor: '#ffffff',
+            boxShadow: 1,
+            p: 0.5,
+            '&:hover': {
+              backgroundColor: '#f0f0f0',
+            },
+          }}
+          aria-label="edit"
+          size="small"
+        >
+          <EditIcon fontSize="small" />
+        </IconButton>
+        </div>
+      </Box>
+    )
+  }
+
+
   return (
     <div>
       <h2 className="mb-4 text-xl font-bold">User Registration</h2>
+
+      <div className="flex flex-row  mb-6 sm:flex-col md:flex-row lg:flex-row xl:flex-row ">
+        <div className="mr-4">
+        {renderProfileImage()}
+        </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         {/* Grid layout for fields */}
@@ -95,7 +189,7 @@ export default function RegistrationForm() {
           </div>
 
           {/* Address */}
-          <div className="">
+          <div>
             <label className="mb-1 block font-medium">Address *</label>
             <input
               type="text"
@@ -182,6 +276,11 @@ export default function RegistrationForm() {
             {errors.doj && <p className="text-sm text-red-500">{errors.doj.message}</p>}
           </div>
         </div>
+        
+        {/* <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 bg-orange-300 p-4 mt-4 rounded text-black"> */}
+          <AutoCompleteDropDown options={[]} mode={'editable'} label='Select plan' value={paymentDetails.plan} onChange={(value) => setPaymentDetails({...paymentDetails,plan:value})} />
+
+        {/* </div> */}
 
         {/* Submit Button */}
         <div>
@@ -190,6 +289,20 @@ export default function RegistrationForm() {
           </button>
         </div>
       </form>
+
+      </div>
+
+      {showImageUploadModal && <Modal
+          keepMounted
+          open={showImageUploadModal}
+          onClose={()=>{}}
+          aria-labelledby="keep-mounted-modal-title"
+          aria-describedby="keep-mounted-modal-description"
+        >
+          <Box sx={modalstyle}>
+          <WebcamCapture getProfileImage={(image:string)=>{setShowImageUploadModal(false); setProfileImage(image)}}/>
+          </Box>
+        </Modal>}
     </div>
   );
 }

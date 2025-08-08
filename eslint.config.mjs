@@ -46,6 +46,7 @@ export default [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
+      "react-hooks/exhaustive-deps":"off",
       // Prettier integration rules
       "prettier/prettier": "warn",
 
